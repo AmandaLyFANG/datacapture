@@ -3,7 +3,6 @@ import time
 from selenium.common import NoSuchElementException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 
 # create a new Chrome browser instance
@@ -16,7 +15,9 @@ page = 0
 index = 0
 while page < 3:
     page += 1
-    time.sleep(5)
+
+    # wait for the page to load
+    time.sleep(3)
 
     # find the search box element by name
     search_box = driver.find_elements(By.CLASS_NAME, "WAllg._T")
@@ -30,8 +31,7 @@ while page < 3:
     for element in search_box:
         # element.find_element(By.CLASS_NAME, "Hlmiy.F1").find_element(By.TAG_NAME,"span").get_attribute("class")
         # 1.	Rating
-        rating = \
-        element.find_element(By.CLASS_NAME, "Hlmiy.F1").find_element(By.TAG_NAME, "span").get_attribute("class")[-2]
+        rating = element.find_element(By.CLASS_NAME, "Hlmiy.F1").find_element(By.TAG_NAME, "span").get_attribute("class")[-2]
 
         # 2.	Review title
         review_title = element.find_element(By.CLASS_NAME, "KgQgP.MC._S.b.S6.H5._a").find_element(By.TAG_NAME,
@@ -40,7 +40,7 @@ while page < 3:
         review_content = element.find_element(By.CLASS_NAME, "QewHA.H4._a").find_element(By.TAG_NAME, "span").text
 
         # 4.    Date of travel
-        data_of_travel = element.find_element(By.CLASS_NAME, "teHYY._R.Me.S4.H3").text
+        data_of_travel = element.find_element(By.CLASS_NAME, "teHYY._R.Me.S4.H3").text.replace("Date of travel: ", "")
 
         # 5.	Ratings of individual criteria (Bonus)
         individual_criteria_dict = {}
@@ -84,7 +84,6 @@ while page < 3:
 
 # type in a search term and submit the form
 # search_box.send_keys("OpenAI" + Keys.RETURN)
-
 # search_box.send_keys('ChromeDriver')
 
 search_box.clear()
