@@ -21,7 +21,7 @@ url = 'https://api.producthunt.com/v2/api/graphql'
 
 # setup headers with API token
 headers = {
-    'Authorization': 'Bearer TSEO6kd29X0dmjWnD71fCtUA_EcZ6Cd8XtXanDS1AYA',  # replace with your token
+    'Authorization': 'Bearer TSEO6kd29X0dmjWnD71fCtUA_EcZ6Cd8XtXanDS1AYA',  # I will delete this token after this week.
     'Accept': 'application/json',
     'Content-Type': 'application/json',
 }
@@ -35,7 +35,7 @@ print(str(today))
 
 initial_query = """
 {
-  posts(order: FEATURED_AT, featured: true, createdAfter: 2023-07-11T00:00:00Z) {
+  posts(order: FEATURED_AT, featured: true, postedAfter:"2023-07-11T00:00:00Z") {
     edges {
       node {
         id
@@ -72,7 +72,7 @@ try:
     while hasNextPage:
         query = """
         {
-          posts(order: FEATURED_AT, featured: true, createdAfter:2023-07-11T00:00:00Z, after:\"""" + startCursor + """\",) {
+          posts(order: FEATURED_AT, featured: true, postedAfter:"2023-07-11T00:00:00Z", after:\"""" + startCursor + """\",) {
             edges {
               node {
                 id
@@ -110,6 +110,6 @@ try:
 except Exception:
     write_to_csv(productList, "productList.csv")
 
-print(productList)
+print(productList[0])
 
 write_to_csv(productList, "productList.csv")
