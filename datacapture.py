@@ -24,9 +24,10 @@ def data_capture(commentNum: int) -> list:
     index = 0
     while page < final_page:
         page += 1
+        print("Page:", page)
 
         # wait for the page to load
-        time.sleep(5)
+        time.sleep(3)
 
         # find the search box element by name
         search_box = driver.find_elements(By.CLASS_NAME, "WAllg._T")
@@ -56,9 +57,10 @@ def data_capture(commentNum: int) -> list:
             # 3.	Review content
             review_content = element.find_element(By.CLASS_NAME, "QewHA.H4._a").find_element(By.TAG_NAME, "span").text
 
-            # 4.    Date of travel
-            data_of_travel = element.find_element(By.CLASS_NAME, "teHYY._R.Me.S4.H3").text.replace("Date of travel: ",
-                                                                                                   "")
+            # 4.    Date of travel -- exist non value
+            data_of_travel = ""
+            if element.find_elements(By.CLASS_NAME, "teHYY._R.Me.S4.H3"):
+                data_of_travel = element.find_element(By.CLASS_NAME, "teHYY._R.Me.S4.H3").text.replace("Date of travel: ", "")
 
             # 5.	Ratings of individual criteria (Bonus)
             individual_criteria_dict = {
@@ -118,7 +120,7 @@ def data_capture(commentNum: int) -> list:
 
 def write_to_csv(data, filename):
     keys = data[0].keys()
-    with open(filename, 'w', newline='') as output_file:
+    with open(filename, 'w', newline='', encoding='utf-8') as output_file:
         dict_writer = csv.DictWriter(output_file, keys)
         dict_writer.writeheader()
         dict_writer.writerows(data)
@@ -127,7 +129,7 @@ def write_to_csv(data, filename):
 # Use the function to write the data to a CSV file
 
 def write_to_json(data, filename):
-    with open(filename, 'w') as f:
+    with open(filename, 'w', encoding='utf-8') as f:
         json.dump(data, f)
 
 
