@@ -21,7 +21,7 @@ url = 'https://api.producthunt.com/v2/api/graphql'
 
 # setup headers with API token
 headers = {
-    'Authorization': 'Bearer TSEO6kd29X0dmjWnD71fCtUA_EcZ6Cd8XtXanDS1AYA',  # I will delete this token after this week.
+    'Authorization': '*************',  # I will delete this token after this week.
     'Accept': 'application/json',
     'Content-Type': 'application/json',
 }
